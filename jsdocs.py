@@ -353,14 +353,9 @@ class JsdocsParser(object):
             args = re.sub("/\*.*?\*/", '', args)
             for argType, argName in self.parseArgs(args):
                 typeInfo = self.getTypeInfo(argType, argName)
-                
+
                 format_str = "@param %s%s"
-                
-                typeInfoSettings = self.viewSettings.get("jsdocs_type_info")
-                typeInfoName = escape(argType or self.guessTypeFromName(argName) or "[type]")
-                if typeInfoSettings[typeInfoName]:
-                    format_str += " "+typeInfoSettings[typeInfoName]
-                elif (self.viewSettings.get('jsdocs_param_description')):
+                if (self.viewSettings.get('jsdocs_param_description')):
                     format_str += " ${1:[description]}"
 
                 out.append(format_str % (
