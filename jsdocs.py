@@ -355,7 +355,12 @@ class JsdocsParser(object):
                 typeInfo = self.getTypeInfo(argType, argName)
 
                 format_str = "@param %s%s"
-                if (self.viewSettings.get('jsdocs_param_description')):
+				
+				typeInfoSettings = self.viewSettings.get("jsdocs_type_info")
+				typeInfoName = escape(argType or self.guessTypeFromName(argName) or "[type]")
+				if typeInfoSettings[typeInfoName]:
+					format_str += " "+typeInfoSettings[typeInfoName]
+                elif (self.viewSettings.get('jsdocs_param_description')):
                     format_str += " ${1:[description]}"
 
                 out.append(format_str % (
